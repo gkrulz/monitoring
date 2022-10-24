@@ -12,7 +12,6 @@ public class HealthMonitoringController {
     @Autowired
     private HealthMonitoringService healthMonitoringService;
 
-    //TODO add the time taken in logs
     @GetMapping("/health")
     public Mono<HealthResponse> retrieveHealth() {
         return healthMonitoringService.calculateHealth();

@@ -1,7 +1,6 @@
 package com.padmaka.monitoring.contributor;
 
 import com.padmaka.monitoring.model.Health;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -9,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.DefaultUriBuilderFactory;
 import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
@@ -34,7 +32,6 @@ public class HealthContributor {
             "/aura/health"
     );
 
-    //TODO extract the calling api part
     public Flux<Health> contribute() {
         return Flux.fromIterable(healthEndpoints).flatMap(healthEndpoint -> webClient.get()
                 .uri(healthEndpoint)
@@ -45,7 +42,6 @@ public class HealthContributor {
         );
     }
 
-    //TODO use only one webclient
     public List<Health> contributeWithoutWebFlux() {
         List<Health> healthDependencies = new ArrayList<>();
 
