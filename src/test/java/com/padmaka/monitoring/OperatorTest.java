@@ -3,8 +3,11 @@ package com.padmaka.monitoring;
 import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class OperatorTest {
@@ -21,6 +24,17 @@ public class OperatorTest {
         Flux.range(1, 5)
                 .flatMap(i -> Flux.range(i * 10, 2))
                 .subscribe(System.out::println);
+    }
+
+    @Test
+    void filter() {
+        List<String> cities = Arrays.asList("Tokyo", "New York", "London", "Berlin", "Rio");
+
+        Flux<String> fluxCities = Flux.fromIterable(cities).filter(city -> city.startsWith("T"));
+
+        StepVerifier.create(fluxCities.log())
+                .expectNext("Tokyo")
+                .verifyComplete();
     }
 
     @Test
